@@ -1,0 +1,17 @@
+# Copy to terraform.tfvars and adjust. The resource groups and the workspace must already exist.
+
+environment = "prod"
+
+hub_resource_group_name   = "rg-connectivity-prod-eus"
+spoke_resource_group_name = "rg-app-prod-eus"
+
+log_analytics_workspace_name = "log-management-prod-eus"
+log_analytics_resource_group = "rg-management-prod-eus"
+
+cost_center = "cc-1234"
+owner       = "platform-team"
+
+# ddos_protection_plan_id = "/subscriptions/<subscription-id>/resourceGroups/rg-ddos-prod-eus/providers/Microsoft.Network/ddosProtectionPlans/ddos-prod-eus"
+ddos_protection_plan_id = null
+
+use_remote_gateway = false

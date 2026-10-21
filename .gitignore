@@ -1,0 +1,21 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+.terraformrc
+terraform.rc
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Plan files contain variable values.
+*.tfplan
+tfplan
+
+# Per-layer terraform.tfvars are committed (non-sensitive config).
+# Machine-local values (your IP, SSH key) go in *.auto.tfvars and stay out of git.
+*.auto.tfvars
+*.auto.tfvars.json
+.terraform.lock.hcl.bak

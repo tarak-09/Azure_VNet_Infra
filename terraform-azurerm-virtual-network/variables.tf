@@ -9,7 +9,7 @@ variable "location" {
 }
 
 variable "environment" {
-  description = "dev, test or prod. Used in names and tags."
+  description = "dev, test or prod. Used in the VNet name."
   type        = string
 
   validation {
@@ -19,34 +19,17 @@ variable "environment" {
 }
 
 variable "workload" {
-  description = "Short name used in resource names, e.g. core."
+  description = "Short name used in the VNet name, e.g. core."
   type        = string
 }
 
 variable "address_space" {
-  description = "VNet IP ranges, e.g. [\"10.10.0.0/16\"]."
+  description = "VNet IP ranges, e.g. [\"10.10.0.0/27\"]."
   type        = list(string)
 }
 
-variable "subnets" {
-  description = "Subnets keyed by short name. Each one gets its own NSG."
-  type = map(object({
-    address_prefix = string
-    nsg_rules = optional(list(object({
-      name                = string
-      priority            = number # 100-4096, lower runs first
-      direction           = string # Inbound or Outbound
-      access              = string # Allow or Deny
-      protocol            = string # Tcp, Udp, Icmp or *
-      source_address      = optional(string, "*")
-      destination_address = optional(string, "*")
-      destination_port    = optional(string, "*")
-    })), [])
-  }))
-}
-
 variable "tags" {
-  description = "Extra tags added to every resource."
+  description = "Tags applied to the VNet."
   type        = map(string)
   default     = {}
 }

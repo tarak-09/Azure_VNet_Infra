@@ -6,6 +6,5 @@ module "vnet" {
   environment         = var.environment
   workload            = var.workload
   address_space       = var.address_space
-  subnets             = var.subnets
   tags                = var.tags
 }

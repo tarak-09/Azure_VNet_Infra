@@ -20,22 +20,6 @@ variable "address_space" {
   type = list(string)
 }
 
-variable "subnets" {
-  type = map(object({
-    address_prefix = string
-    nsg_rules = optional(list(object({
-      name                = string
-      priority            = number
-      direction           = string
-      access              = string
-      protocol            = string
-      source_address      = optional(string, "*")
-      destination_address = optional(string, "*")
-      destination_port    = optional(string, "*")
-    })), [])
-  }))
-}
-
 variable "tags" {
   type    = map(string)
   default = {}

@@ -1,38 +1,42 @@
-# ---------- Placement & naming ----------
+# Values are set in terraform.tfvars. See the module's variables.tf for details.
 
 variable "resource_group_name" {
-  description = "Existing resource group for the VNet. Its region is used for everything."
-  type        = string
+  type = string
+}
+
+variable "location" {
+  type = string
 }
 
 variable "environment" {
-  description = "dev, test, staging or prod."
-  type        = string
+  type = string
 }
 
 variable "workload" {
-  description = "Short workload name used in resource names, e.g. core. Lowercase letters, digits and hyphens."
-  type        = string
+  type = string
 }
-
-# ---------- Network ----------
 
 variable "address_space" {
-  description = "VNet address space. Must not overlap other VNets you may peer with."
-  type        = list(string)
+  type = list(string)
 }
 
-variable "app_subnet_prefix" {
-  description = "CIDR of the app subnet. Must sit inside address_space."
-  type        = string
+variable "subnets" {
+  type = map(object({
+    address_prefix = string
+    nsg_rules = optional(list(object({
+      name                = string
+      priority            = number
+      direction           = string
+      access              = string
+      protocol            = string
+      source_address      = optional(string, "*")
+      destination_address = optional(string, "*")
+      destination_port    = optional(string, "*")
+    })), [])
+  }))
 }
 
-# ---------- Tags ----------
-
-variable "cost_center" {
-  type = string
-}
-
-variable "owner" {
-  type = string
+variable "tags" {
+  type    = map(string)
+  default = {}
 }

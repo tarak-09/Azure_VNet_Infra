@@ -1,12 +1,26 @@
-# Edit, then from environments/dev: terraform plan -out tfplan, review, terraform apply tfplan.
-
 resource_group_name = "Test-RG"
+location            = "centralus"
 environment         = "dev"
 workload            = "core"
 
-# Test-RG already has TestVnet on 10.0.0.0/27; keep ranges distinct.
-address_space     = ["10.10.0.0/16"]
-app_subnet_prefix = "10.10.1.0/24"
+# Test-RG already has TestVnet on 10.0.0.0/27, so use a different range.
+address_space = ["10.10.0.0/16"]
 
-cost_center = "cc-dev"
-owner       = "tarak"
+subnets = {
+  app = {
+    address_prefix = "10.10.1.0/24"
+  }
+
+  # Example of a subnet with its own NSG rule:
+  # web = {
+  #   address_prefix = "10.10.2.0/24"
+  #   nsg_rules = [
+  #     { name = "allow-https", priority = 100, direction = "Inbound", access = "Allow", protocol = "Tcp", destination_port = "443" },
+  #   ]
+  # }
+}
+
+tags = {
+  owner       = "tarak"
+  cost_center = "cc-dev"
+}

@@ -15,6 +15,13 @@ resource "azurerm_virtual_network" "this" {
   location            = var.location
   address_space       = var.address_space
   tags                = local.tags
+
+  # Encrypts VM-to-VM traffic for VM sizes that support it (D/E v4+ etc. with Accelerated
+  # Networking). AllowUnencrypted is the only mode Azure supports today: VMs that can't
+  # encrypt still communicate, just unencrypted. Free.
+  encryption {
+    enforcement = "AllowUnencrypted"
+  }
 }
 
 resource "azurerm_subnet" "this" {
